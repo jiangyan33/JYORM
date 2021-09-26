@@ -18,11 +18,11 @@ namespace JYORMApi.Utils
         /// <param name="userName"></param>
         /// <param name="roleCode"></param>
         /// <returns></returns>
-        public static string IssueJwt(string key, int expireTime, User user, string[] roleCode = null)
+        public static string IssueJwt(string key, int expireTime, SysUser user, string[] roleCode = null)
         {
             //创建claim
             var authClaims = new List<Claim> {
-                new Claim(ClaimTypes.Name,user.Name??string.Empty),
+                new Claim(ClaimTypes.Name,user.UserName??string.Empty),
                 new Claim(JwtRegisteredClaimNames.Jti,user.Id.ToString())
             };
 

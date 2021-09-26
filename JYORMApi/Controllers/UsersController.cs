@@ -15,7 +15,6 @@ namespace JYORMApi.Controllers
     public class UsersController : ControllerBase
     {
         private readonly ILogger<UsersController> _logger;
-        private readonly IUserService _userService;
 
         private readonly ISysUserService _sysUserService;
 
@@ -26,7 +25,7 @@ namespace JYORMApi.Controllers
         }
 
         [HttpGet("login")]
-        public async Task<Result> Get([FromQuery] User user)
+        public async Task<Result> Get([FromQuery] SysUser user)
         {
             var res = await _sysUserService.AddOne(new SysUser());
             //if (string.IsNullOrEmpty(user.Name) || string.IsNullOrEmpty(user.Password)) throw new CoreCommonException("用户名或者密码不能为空", ResultCode.ArgumentError);
@@ -36,17 +35,6 @@ namespace JYORMApi.Controllers
             return new Result(res);
         }
 
-        [HttpPost("RefreshToken")]
-        [Authorize]
-        public async Task<Result> RefreshToken()
-        {
-            var user = new User { Id = Convert.ToInt64(HttpContext.Items["Id"]) };
-
-            var result = await _userService.RefreshToken(user);
-            if (result == null) throw new CoreCommonException("Token刷新失败", ResultCode.AuthError);
-
-            return new Result(data: result);
-        }
 
         [HttpGet("Test")]
         public async Task<List<SysUser>> Test()

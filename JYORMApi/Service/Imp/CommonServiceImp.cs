@@ -17,7 +17,8 @@ namespace JYORMApi.Service.Imp
 
         public async Task<List<JYORMCommon.Entity.Columns>> GetTableCreateDesc()
         {
-            return await _commonDao.GetTableCreateDesc();
+            return null;
+            //return await _commonDao.GetTableCreateDesc();
         }
     }
 }

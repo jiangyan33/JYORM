@@ -1,28 +1,15 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
-using System;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Net.Http;
-using System.Reflection;
-using System.Text;
 using System.Text.Json;
-using JYORMApi.Dao;
-using JYORMApi.Entity;
 using JYORMApi.Middleware;
-using JYORMApi.Model;
 using JYORMApi.Utils;
-using JYORMApi.Persistence;
-using System.Collections.Generic;
-using SqlSugar;
+using JYORMApi.Converters;
+using Newtonsoft.Json.Serialization;
 
 namespace JYORMApi
 {
@@ -40,12 +27,11 @@ namespace JYORMApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers().AddJsonOptions(opt =>
+            services.AddControllers().AddNewtonsoftJson(opt =>
               {
-                  opt.JsonSerializerOptions.Converters.Add(new Converters.DateTimeConverter());
-                  // 保持原样输出
-                  opt.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-              }).AddNewtonsoftJson();
+                  opt.SerializerSettings.Converters.Add(new DateTimeConverter());
+                  opt.SerializerSettings.ContractResolver = new OrderedContractResolver();
+              });
             services.InitService();
             //services.InitAuthentication(Configuration);
         }

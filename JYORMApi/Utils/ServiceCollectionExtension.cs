@@ -102,8 +102,9 @@ namespace JYORMApi.Utils
                         // 手动校验token的过期时间
                         // 根据http请求实例化一个子容器
                         using var scope = context.HttpContext.RequestServices.CreateScope();
-                        var authorDao = scope.ServiceProvider.GetService<UserDao>();
-                        var author = await authorDao.FindOne(new User { Id = authorId });
+                        //var authorDao = scope.ServiceProvider.GetService<UserDao>();
+                        //var author = await authorDao.FindOne(new User { Id = authorId });
+                        var author = new SysUser();
                         // token过期时间
                         var expireTime = Convert.ToInt32(configuration["AppSettings:ExpireTime"]);
 

@@ -1,20 +1,19 @@
-﻿using System;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace JYORMApi.Converters
 {
     public class DateTimeConverter : JsonConverter<DateTime>
     {
-        public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override DateTime ReadJson(JsonReader reader, Type objectType, DateTime existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
-            return DateTime.Parse(reader.GetString());
+            return DateTime.Parse(reader.ReadAsString());
         }
 
-        public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
+        public override void WriteJson(JsonWriter writer, DateTime value, JsonSerializer serializer)
         {
-            //writer.WriteStringValue(value.ToUniversalTime().ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"));
-            writer.WriteStringValue(value.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"));
+            // writer.WriteValue(value.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss"));
+            writer.WriteValue(value.ToUniversalTime().ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"));
         }
     }
 }
