@@ -5,11 +5,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.IdentityModel.Tokens.Jwt;
-using System.Text.Json;
 using JYORMApi.Middleware;
 using JYORMApi.Utils;
 using JYORMApi.Converters;
-using Newtonsoft.Json.Serialization;
+using JYORMApi.Filters;
 
 namespace JYORMApi
 {
@@ -27,7 +26,8 @@ namespace JYORMApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers().AddNewtonsoftJson(opt =>
+            services.AddControllers(opt => opt.Filters.Add<ValidationResultFilterAttribute>())
+           .AddNewtonsoftJson(opt =>
               {
                   opt.SerializerSettings.Converters.Add(new DateTimeConverter());
                   opt.SerializerSettings.ContractResolver = new OrderedContractResolver();
