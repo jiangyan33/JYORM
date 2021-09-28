@@ -1,0 +1,428 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JYORMApi</name>
+    </assembly>
+    <members>
+        <member name="T:JYORMApi.Attr.TransactionsAttribute">
+            <summary>
+            声明式事务特性，仅仅作为事务声明
+            </summary>
+        </member>
+        <member name="M:JYORMApi.Attr.TransactionsAttribute.#ctor(System.Boolean)">
+            <summary>
+            声明式事务特性的构造方法
+            </summary>
+            <param name="transactions">为true时启用事务</param>
+        </member>
+        <member name="M:JYORMApi.Controllers.CommonController.GetTableCreateDesc">
+            <summary>
+            创建数据库表描述信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:JYORMApi.Controllers.UsersController.Get(JYORMApi.Entity.SysUser)">
+            <summary>
+            用户登录接口
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JYORMApi.Converters.OrderedContractResolver.CreateProperties(System.Type,Newtonsoft.Json.MemberSerialization)">
+            <summary>
+            设置Newtonsoft序列化时的顺序，根据字母顺序进行排列,小驼峰
+            </summary>
+            <param name="type"></param>
+            <param name="memberSerialization"></param>
+            <returns></returns>
+        </member>
+        <member name="T:JYORMApi.Entity.BaseEntity">
+            <summary>
+            Entity基础类
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Entity.BaseEntity.Id">
+            <summary>
+            主键
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Entity.BaseEntity.CreateBy">
+            <summary>
+            创建人
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Entity.BaseEntity.UpdateBy">
+            <summary>
+            更新人
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Entity.BaseEntity.CreateTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Entity.BaseEntity.UpdateTime">
+            <summary>
+            更新时间
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Entity.SysUser.UserName">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Entity.SysUser.Password">
+            <summary>
+            密码
+            </summary>
+        </member>
+        <member name="T:JYORMApi.Middleware.CorsMiddleware">
+            <summary>
+            跨域请求处理中间件
+            </summary>
+        </member>
+        <member name="T:JYORMApi.Middleware.ExceptionHandlerMiddleware">
+            <summary>
+            全局异常处理中间件
+            </summary>
+        </member>
+        <member name="M:JYORMApi.Middleware.MiddlewareExtension.UseCorsMiddleware(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            跨域请求处理中间件
+            </summary>
+            <param name="applicationBuilder"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JYORMApi.Middleware.MiddlewareExtension.UseExceptionHandlerMiddleware(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            全局异常处理中间件
+            </summary>
+            <param name="applicationBuilder"></param>
+            <returns></returns>
+        </member>
+        <member name="T:JYORMApi.Model.PageResult`1">
+            <summary>
+            封装分页相关数据
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:JYORMApi.Model.PageResult`1.PageNum">
+            <summary>
+            当前页
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Model.PageResult`1.PageSize">
+            <summary>
+            每页显示数量
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Model.PageResult`1.Pages">
+            <summary>
+            总页数
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Model.PageResult`1.Rows">
+            <summary>
+            总数据行数
+            </summary>
+        </member>
+        <member name="F:JYORMApi.Model.ResultCode.Success">
+            <summary>
+            成功
+            </summary>
+        </member>
+        <member name="F:JYORMApi.Model.ResultCode.UnknownError">
+            <summary>
+            未知的错误
+            </summary>
+        </member>
+        <member name="F:JYORMApi.Model.ResultCode.ArgumentError">
+            <summary>
+            参数错误
+            </summary>
+        </member>
+        <member name="F:JYORMApi.Model.ResultCode.DatabaseError">
+            <summary>
+            数据库执行错误
+            </summary>
+        </member>
+        <member name="F:JYORMApi.Model.ResultCode.LogicError">
+            <summary>
+            内部接口逻辑错误
+            </summary>
+        </member>
+        <member name="F:JYORMApi.Model.ResultCode.ValidateError">
+            <summary>
+            数据验证没通过
+            </summary>
+        </member>
+        <member name="F:JYORMApi.Model.ResultCode.AuthError">
+            <summary>
+            权限错误
+            </summary>
+        </member>
+        <member name="F:JYORMApi.Model.ResultCode.EmptyResult">
+            <summary>
+            查询结果为空
+            </summary>
+        </member>
+        <member name="F:JYORMApi.Model.ResultCode.WechatAuthError">
+            <summary>
+            微信未授权，需要授权
+            </summary>
+        </member>
+        <member name="F:JYORMApi.Model.ResultCode.AuthExpireError">
+            <summary>
+            权限过期
+            </summary>
+        </member>
+        <member name="F:JYORMApi.Model.ResultCode.OtherError">
+            <summary>
+            其他错误
+            </summary>
+        </member>
+        <member name="M:JYORMApi.Persistence.DBEntityExtension.StrChange(System.String)">
+            <summary>
+            字符串大驼峰和下划线相互转换
+            </summary>
+            <param name="src"></param>
+            <returns></returns>
+        </member>
+        <member name="P:JYORMApi.Persistence.DefaultDBClient.GetInstance">
+            <summary>
+            获取SqlSugarClient实例
+            </summary>
+        </member>
+        <member name="M:JYORMApi.Utils.DateTimeHelper.FormatTime(System.Int64)">
+            <summary>
+            毫秒转天时分秒
+            </summary>
+            <param name="ms"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JYORMApi.Utils.DateTimeHelper.GetUnixTimeStamp(System.DateTime)">
+            <summary>
+            获取unix时间戳
+            </summary>
+            <param name="dt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JYORMApi.Utils.DateTimeHelper.GetDateTimeFromTimestamp(System.Int64)">
+            <summary>
+            时间戳转换成日期
+            </summary>
+            <param name="timeStamp"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JYORMApi.Utils.DateTimeHelper.GetDayMinDate(System.DateTime)">
+            <summary>
+            获取日期天的最小时间
+            </summary>
+            <param name="dt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JYORMApi.Utils.DateTimeHelper.GetDayMaxDate(System.DateTime)">
+            <summary>
+            获取日期天的最大时间
+            </summary>
+            <param name="dt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JYORMApi.Utils.DateTimeHelper.FormatDateTime(System.Nullable{System.DateTime})">
+            <summary>
+            获取日期天的最大时间
+            </summary>
+            <param name="dt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JYORMApi.Utils.JwtHelper.IssueJwt(System.String,System.Int32,JYORMApi.Entity.SysUser,System.String[])">
+            <summary>
+            生成JWT
+            </summary>
+            <param name="userid"></param>
+            <param name="userName"></param>
+            <param name="roleCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JYORMApi.Utils.JwtHelper.GetExp(System.String)">
+            <summary>
+            获取过期时间
+            </summary>
+            <param name="jwtStr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JYORMApi.Utils.JwtHelper.GetUserName(System.String)">
+            <summary>
+            解析
+            </summary>
+            <param name="jwtStr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JYORMApi.Utils.JwtHelper.GetUserRoleCodes(System.String)">
+            <summary>
+            解析
+            </summary>
+            <param name="jwtStr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JYORMApi.Utils.Parser.ParseToLong(System.Object)">
+            <summary>
+            将object转换为long，若转换失败，则返回0。不抛出异常。
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JYORMApi.Utils.Parser.ParseToLong(System.String,System.Int64)">
+            <summary>
+            将object转换为long，若转换失败，则返回指定值。不抛出异常。
+            </summary>
+            <param name="str"></param>
+            <param name="defaultValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JYORMApi.Utils.Parser.ParseToInt(System.Object)">
+            <summary>
+            将object转换为int，若转换失败，则返回0。不抛出异常。
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JYORMApi.Utils.Parser.ParseToInt(System.Object,System.Int32)">
+            <summary>
+            将object转换为int，若转换失败，则返回指定值。不抛出异常。 null返回默认值
+            </summary>
+            <param name="str"></param>
+            <param name="defaultValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JYORMApi.Utils.Parser.ParseToShort(System.Object)">
+            <summary>
+            将object转换为short，若转换失败，则返回0。不抛出异常。
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JYORMApi.Utils.Parser.ParseToShort(System.Object,System.Int16)">
+            <summary>
+            将object转换为short，若转换失败，则返回指定值。不抛出异常。
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JYORMApi.Utils.Parser.ParseToDecimal(System.Object,System.Decimal)">
+            <summary>
+            将object转换为demical，若转换失败，则返回指定值。不抛出异常。
+            </summary>
+            <param name="str"></param>
+            <param name="defaultValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JYORMApi.Utils.Parser.ParseToDecimal(System.Object)">
+            <summary>
+            将object转换为demical，若转换失败，则返回0。不抛出异常。
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JYORMApi.Utils.Parser.ParseToBool(System.Object)">
+            <summary>
+            将object转换为bool，若转换失败，则返回false。不抛出异常。
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JYORMApi.Utils.Parser.ParseToBool(System.Object,System.Boolean)">
+            <summary>
+            将object转换为bool，若转换失败，则返回指定值。不抛出异常。
+            </summary>
+            <param name="str"></param>
+            <param name="result"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JYORMApi.Utils.Parser.ParseToFloat(System.Object)">
+            <summary>
+            将object转换为float，若转换失败，则返回0。不抛出异常。
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JYORMApi.Utils.Parser.ParseToFloat(System.Object,System.Single)">
+            <summary>
+            将object转换为float，若转换失败，则返回指定值。不抛出异常。
+            </summary>
+            <param name="str"></param>
+            <param name="result"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JYORMApi.Utils.Parser.ParseToGuid(System.String)">
+            <summary>
+            将string转换为Guid，若转换失败，则返回Guid.Empty。不抛出异常。
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JYORMApi.Utils.Parser.ParseToDateTime(System.String)">
+            <summary>
+            将string转换为DateTime，若转换失败，则返回日期最小值。不抛出异常。
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JYORMApi.Utils.Parser.ParseToDateTime(System.String,System.Nullable{System.DateTime})">
+            <summary>
+            将string转换为DateTime，若转换失败，则返回默认值。
+            </summary>
+            <param name="str"></param>
+            <param name="defaultValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JYORMApi.Utils.Parser.ParseToString(System.Object)">
+            <summary>
+            将object转换为string，若转换失败，则返回""。不抛出异常。
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JYORMApi.Utils.Parser.ParseToDouble(System.Object)">
+            <summary>
+            将object转换为double，若转换失败，则返回0。不抛出异常。
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JYORMApi.Utils.Parser.ParseToDouble(System.Object,System.Double)">
+            <summary>
+            将object转换为double，若转换失败，则返回指定值。不抛出异常。
+            </summary>
+            <param name="str"></param>
+            <param name="defaultValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JYORMApi.Utils.Parser.CastSuper``1(System.Collections.IEnumerable)">
+            <summary>
+            强制转换类型
+            </summary>
+            <typeparam name="TResult"></typeparam>
+            <param name="source"></param>
+            <returns></returns>
+        </member>
+        <member name="M:JYORMApi.Utils.ServiceCollectionExtension.InitService(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            初始化服务实例
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:JYORMApi.Utils.ServiceCollectionExtension.InitAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            初始化认证信息
+            </summary>
+            <param name="services"></param>
+            <param name="key"></param>
+        </member>
+        <member name="T:JYORMApi.Utils.ServiceProxy">
+            <summary>
+            Service层代理对象
+            </summary>
+        </member>
+    </members>
+</doc>

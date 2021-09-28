@@ -5,6 +5,11 @@
     <Description>webapi脚手架项目</Description>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>D:\jiangyan33\workspace\JYORM\JYORMApi\JYORMApi.xml</DocumentationFile>
+    <NoWarn>1701;1702;1591</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
@@ -16,11 +21,24 @@
     <PackageReference Include="MySqlConnector" Version="1.2.1" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.10.0" />
     <PackageReference Include="SqlSugarCore" Version="5.0.4" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.2" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\JYORMCommon\JYORMCommon.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\index.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="JYORMApi.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

@@ -9,6 +9,8 @@ using JYORMApi.Middleware;
 using JYORMApi.Utils;
 using JYORMApi.Converters;
 using JYORMApi.Filters;
+using Microsoft.OpenApi.Models;
+using System.IO;
 
 namespace JYORMApi
 {
@@ -34,6 +36,14 @@ namespace JYORMApi
               });
             services.InitService();
             //services.InitAuthentication(Configuration);
+            services.AddSwaggerGen(option =>
+            {
+                option.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+                var basePath = Path.GetDirectoryName(typeof(Program).Assembly.Location);
+                var xmlPath = Path.Combine(basePath, "JYORMApi.xml");
+                option.IncludeXmlComments(xmlPath);
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,10 +60,12 @@ namespace JYORMApi
             });
 
             app.UseStaticFiles();
+            app.UseSwagger();
+            app.UseSwaggerUI(option => option.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"));
 
             app.MapWhen(context =>
             {
-                return !context.Request.Path.Value.StartsWith("/api");
+                return !(context.Request.Path.Value.StartsWith("/api") || context.Request.Path.Value.StartsWith("/swagger"));
             }, appBuilder =>
             {
                 var option = new RewriteOptions();

@@ -6,9 +6,15 @@ namespace JYORMApi.Entity
     [SugarTable(nameof(SysUser))]
     public class SysUser : BaseEntity
     {
+        /// <summary>
+        /// 用户名
+        /// </summary>
         [SugarColumn]
         public string UserName { get; set; }
 
+        /// <summary>
+        /// 密码
+        /// </summary>
         [SugarColumn]
         public string Password { get; set; }
 

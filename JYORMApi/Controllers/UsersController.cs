@@ -24,6 +24,11 @@ namespace JYORMApi.Controllers
             _sysUserService = sysUserService;
         }
 
+        /// <summary>
+        /// 用户登录接口
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         [HttpGet("login")]
         public async Task<Result> Get([FromQuery] SysUser user)
         {

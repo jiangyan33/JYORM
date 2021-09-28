@@ -19,6 +19,10 @@ namespace JYORMApi.Controllers
             _commonService = commonService;
         }
 
+        /// <summary>
+        /// 创建数据库表描述信息
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("GetTableCreateDesc")]
         public async Task<Result> GetTableCreateDesc()
         {
