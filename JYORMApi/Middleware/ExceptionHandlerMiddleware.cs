@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System.Text;
 using System.Threading.Tasks;
 using JYORMApi.Model;
+using System;
 
 namespace JYORMApi.Middleware
 {
@@ -23,24 +24,15 @@ namespace JYORMApi.Middleware
             context.Response.StatusCode = 500;
             context.Response.ContentType = "application/json";
             var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
-            if (exceptionHandlerPathFeature.Error is CoreCommonException ex)
+            if (exceptionHandlerPathFeature.Error is CommonException ex)
             {
-                context.Response.StatusCode = 200;
-                await context.Response.WriteAsync(
-                  JsonConvert.SerializeObject(new Result((ResultCode)System.Enum.Parse(typeof(ResultCode), ex.Code.ToString()), ex.Message)), Encoding.Default);
+                // 主动抛出的错误信息
+                context.Response.StatusCode = ex.Code == ResultCode.AuthError ? 401 : 200;
+                await context.Response.WriteAsync(JsonConvert.SerializeObject(new Result<string>(ex.Code, ex.Message)), Encoding.Default);
                 return;
             }
-            else if (exceptionHandlerPathFeature.Error is CoreAuthException authException)
-            {
-                context.Response.Clear();
-                context.Response.ContentType = "application/json";
-                context.Response.StatusCode = 401;
 
-                await context.Response.WriteAsync(
-                   JsonConvert.SerializeObject(new Result((ResultCode)System.Enum.Parse(typeof(ResultCode), authException.Code.ToString()), authException.Message)), Encoding.Default);
-                return;
-            }
-            var ret = new Result(ResultCode.UnknownError, "服务器发生异常. ");
+            var ret = new Result<Exception>(ResultCode.LogicError, "服务器发生异常. ");
 
             if (env.IsDevelopment())
             {

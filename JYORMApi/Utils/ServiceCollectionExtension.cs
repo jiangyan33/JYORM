@@ -89,7 +89,7 @@ namespace JYORMApi.Utils
                         context.Response.Clear();
                         context.Response.ContentType = "application/json";
                         context.Response.StatusCode = 401;
-                        await context.Response.WriteAsync(JsonConvert.SerializeObject(new Result(ResultCode.AuthError, "Authorization验证失败.")));
+                      //  await context.Response.WriteAsync(JsonConvert.SerializeObject(new Result(ResultCode.AuthError, "Authorization验证失败.")));
                     },
                     OnTokenValidated = async context =>
                     {
@@ -108,12 +108,12 @@ namespace JYORMApi.Utils
                         // token过期时间
                         var expireTime = Convert.ToInt32(configuration["AppSettings:ExpireTime"]);
 
-                        if (date.AddMinutes(-expireTime).ToString("yyyy-MM-dd HH:mm:ss") != author.UpdateTokenTime.ToString("yyyy-MM-dd HH:mm:ss"))
-                            throw new CoreAuthException("Authorization验证失败", (int)ResultCode.AuthError);
+                        //if (date.AddMinutes(-expireTime).ToString("yyyy-MM-dd HH:mm:ss") != author.UpdateTokenTime.ToString("yyyy-MM-dd HH:mm:ss"))
+                        //    throw new CoreAuthException("Authorization验证失败", (int)ResultCode.AuthError);
 
-                        // 判断token是否过期
-                        if (date < DateTime.Now && !context.HttpContext.Request.Path.Value.Contains("users/RefreshToken"))
-                            throw new CoreAuthException("认证信息过期，请重新获取", (int)ResultCode.AuthExpireError);
+                        //判断token是否过期
+                        //if (date < DateTime.Now && !context.HttpContext.Request.Path.Value.Contains("users/RefreshToken"))
+                        //    throw new CoreAuthException("认证信息过期，请重新获取", (int)ResultCode.AuthExpireError);
                     }
                 };
             });

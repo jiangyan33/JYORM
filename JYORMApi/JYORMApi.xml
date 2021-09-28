@@ -21,13 +21,6 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:JYORMApi.Controllers.UsersController.Get(JYORMApi.Entity.SysUser)">
-            <summary>
-            用户登录接口
-            </summary>
-            <param name="user"></param>
-            <returns></returns>
-        </member>
         <member name="M:JYORMApi.Converters.OrderedContractResolver.CreateProperties(System.Type,Newtonsoft.Json.MemberSerialization)">
             <summary>
             设置Newtonsoft序列化时的顺序，根据字母顺序进行排列,小驼峰
@@ -100,11 +93,92 @@
             <param name="applicationBuilder"></param>
             <returns></returns>
         </member>
+        <member name="P:JYORMApi.Model.CommonException.Code">
+            <summary>
+            状态码
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Model.CommonException.Message">
+            <summary>
+            错误信息提示
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Model.QueryParam.Search">
+            <summary>
+            搜索
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Model.QueryParam.OrderField">
+            <summary>
+            排序字段
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Model.QueryParam.IsASC">
+            <summary>
+            排序方式是否为升序
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Model.QueryParam.PageNum">
+            <summary>
+            当前页码
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Model.QueryParam.PageSize">
+            <summary>
+            每页显示数量
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Model.Result`1.Code">
+            <summary>
+            状态码
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Model.Result`1.Message">
+            <summary>
+            错误信息提示
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Model.Result`1.Data">
+            <summary>
+            数据
+            </summary>
+        </member>
+        <member name="M:JYORMApi.Model.Result`1.#ctor(JYORMApi.Model.ResultCode,System.String)">
+            <summary>
+            根据状态码返回数据
+            </summary>
+            <param name="code"></param>
+            <param name="message"></param>
+        </member>
+        <member name="M:JYORMApi.Model.Result`1.#ctor(`0)">
+            <summary>
+            请求成功，且有数据返回
+            </summary>
+            <param name="data"></param>
+        </member>
         <member name="T:JYORMApi.Model.PageResult`1">
             <summary>
             封装分页相关数据
             </summary>
             <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:JYORMApi.Model.PageResult`1.#ctor(System.Collections.Generic.List{`0},System.Int32,System.Int64)">
+            <summary>
+            成功返回分页数据
+            </summary>
+            <param name="data"></param>
+            <param name="pageSize"></param>
+            <param name="rows"></param>
+        </member>
+        <member name="M:JYORMApi.Model.PageResult`1.#ctor">
+            <summary>
+            空参构造方法
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Model.PageResult`1.Data">
+            <summary>
+            数据
+            </summary>
         </member>
         <member name="P:JYORMApi.Model.PageResult`1.PageNum">
             <summary>
@@ -126,24 +200,24 @@
             总数据行数
             </summary>
         </member>
+        <member name="T:JYORMApi.Model.ResultCode">
+            <summary>
+            状态码
+            </summary>
+        </member>
         <member name="F:JYORMApi.Model.ResultCode.Success">
             <summary>
             成功
             </summary>
         </member>
-        <member name="F:JYORMApi.Model.ResultCode.UnknownError">
+        <member name="F:JYORMApi.Model.ResultCode.CommonError">
             <summary>
-            未知的错误
+            自定义错误
             </summary>
         </member>
         <member name="F:JYORMApi.Model.ResultCode.ArgumentError">
             <summary>
-            参数错误
-            </summary>
-        </member>
-        <member name="F:JYORMApi.Model.ResultCode.DatabaseError">
-            <summary>
-            数据库执行错误
+            请求参数错误
             </summary>
         </member>
         <member name="F:JYORMApi.Model.ResultCode.LogicError">
@@ -151,34 +225,9 @@
             内部接口逻辑错误
             </summary>
         </member>
-        <member name="F:JYORMApi.Model.ResultCode.ValidateError">
-            <summary>
-            数据验证没通过
-            </summary>
-        </member>
         <member name="F:JYORMApi.Model.ResultCode.AuthError">
             <summary>
             权限错误
-            </summary>
-        </member>
-        <member name="F:JYORMApi.Model.ResultCode.EmptyResult">
-            <summary>
-            查询结果为空
-            </summary>
-        </member>
-        <member name="F:JYORMApi.Model.ResultCode.WechatAuthError">
-            <summary>
-            微信未授权，需要授权
-            </summary>
-        </member>
-        <member name="F:JYORMApi.Model.ResultCode.AuthExpireError">
-            <summary>
-            权限过期
-            </summary>
-        </member>
-        <member name="F:JYORMApi.Model.ResultCode.OtherError">
-            <summary>
-            其他错误
             </summary>
         </member>
         <member name="M:JYORMApi.Persistence.DBEntityExtension.StrChange(System.String)">

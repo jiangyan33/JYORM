@@ -1,4 +1,5 @@
-﻿using SqlSugar;
+﻿using JYORMApi.Model;
+using SqlSugar;
 using System;
 
 namespace JYORMApi.Entity
@@ -6,7 +7,7 @@ namespace JYORMApi.Entity
     /// <summary>
     /// Entity基础类
     /// </summary>
-    public class BaseEntity
+    public class BaseEntity: QueryParam
     {
         /// <summary>
         /// 主键

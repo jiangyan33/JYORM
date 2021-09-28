@@ -2,6 +2,7 @@
 using JYORMApi.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace JYORMApi.Controllers
@@ -24,10 +25,10 @@ namespace JYORMApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetTableCreateDesc")]
-        public async Task<Result> GetTableCreateDesc()
+        public async Task<Result<List<JYORMCommon.Entity.Columns>>> GetTableCreateDesc()
         {
             var result = await _commonService.GetTableCreateDesc();
-            return new Result(data: result);
+            return new Result<List<JYORMCommon.Entity.Columns>>( result);
         }
     }
 }
