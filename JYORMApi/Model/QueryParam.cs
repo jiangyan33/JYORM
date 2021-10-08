@@ -16,13 +16,13 @@ namespace JYORMApi.Model
         /// 排序字段
         /// </summary>
         [SugarColumn(IsIgnore = true)]
-        public string OrderField { get; set; }
+        public string OrderBy { get; set; }
 
         /// <summary>
         /// 排序方式是否为升序
         /// </summary>
         [SugarColumn(IsIgnore = true)]
-        public bool IsASC { get; set; }
+        public OrderByType OrderByType { get; set; }
 
         /// <summary>
         /// 当前页码

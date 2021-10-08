@@ -45,7 +45,5 @@ namespace JYORMApi.Persistence
         /// 获取SqlSugarClient实例
         /// </summary>
         public SqlSugarClient GetInstance => _client;
-
-
     }
 }

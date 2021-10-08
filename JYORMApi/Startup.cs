@@ -39,8 +39,9 @@ namespace JYORMApi
             services.AddSwaggerGen(option =>
             {
                 option.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
-                var basePath = Path.GetDirectoryName(typeof(Program).Assembly.Location);
-                var xmlPath = Path.Combine(basePath, "JYORMApi.xml");
+                var assembly = typeof(Program).Assembly;
+                var basePath = Path.GetDirectoryName(assembly.Location);
+                var xmlPath = Path.Combine(basePath, $"{assembly.GetName().Name}.xml");
                 option.IncludeXmlComments(xmlPath);
             });
 

@@ -3,7 +3,6 @@ using JYORMApi.Entity;
 using JYORMApi.Model;
 using JYORMApi.Persistence;
 using SqlSugar;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -37,7 +36,8 @@ namespace JYORMApi.Service.Imp
 
         public async Task<List<SysUser>> Get(SysUser sysUser)
         {
-            return await _DB.GetInstance.Queryable<SysUser>().Where(CreateExpression(sysUser).ToExpression()).ToListAsync();
+            return await _DB.GetInstance.Queryable<SysUser>().Where(CreateExpression(sysUser).ToExpression())
+                .OrderBy(x=>x.CreateTime,OrderByType.Asc).ToListAsync();
         }
 
         public async Task<PageResult<SysUser>> GetPages(SysUser sysUser)
