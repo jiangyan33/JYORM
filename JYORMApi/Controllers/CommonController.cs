@@ -31,5 +31,29 @@ namespace JYORMApi.Controllers
             var result = await _commonService.GetTableCreateDesc();
             return new Result<List<Columns>>(result);
         }
+
+
+        /// <summary>
+        /// 生成实体类
+        /// </summary>
+        /// <param name="nameStr">命名空间名称</param>
+        /// <returns></returns>
+        [HttpGet("CreateModel")]
+        public async Task<Result<int>> CreateModel([FromQuery] string nameStr)
+        {
+            var result = await _commonService.CreateModel(nameStr);
+            return new Result<int>(1);
+        }
+
+        /// <summary>
+        /// 事务测试
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("Test")]
+        public async Task<Result<int>> Test()
+        {
+            await _commonService.TestTransaction();
+            return new Result<int>(1);
+        }
     }
 }

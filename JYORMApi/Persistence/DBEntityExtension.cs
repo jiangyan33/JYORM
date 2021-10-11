@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using JYORMApi.Model;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace JYORMApi.Persistence
@@ -48,6 +49,21 @@ namespace JYORMApi.Persistence
                 }
                 return stringBuilder.ToString().TrimStart(charStr);
             }
+        }
+
+        public static string TypeChange(this string src, bool isNull = false)
+        {
+            var result = src switch
+            {
+                "varchar" => "string",
+                "datetime" => "DateTime",
+                "decimal" => "decimal",
+                "int" or "tinyint" => "int",
+                "bigint" => "long",
+                _ => throw new System.Exception("类型匹配失败，未知类型，请联系管理员"),
+            };
+            if (isNull && result != "string") result += "?";
+            return result;
         }
     }
 }

@@ -21,6 +21,19 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:JYORMApi.Controllers.CommonController.CreateModel(System.String)">
+            <summary>
+            生成实体类
+            </summary>
+            <param name="nameStr">命名空间名称</param>
+            <returns></returns>
+        </member>
+        <member name="M:JYORMApi.Controllers.CommonController.Test">
+            <summary>
+            事务测试
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:JYORMApi.Converters.OrderedContractResolver">
             <summary>
              返回实体类中的属性根据字母进行排序
@@ -109,6 +122,11 @@
         <member name="P:JYORMApi.Entity.Columns.ColumnComment">
             <summary>
             列注释
+            </summary>
+        </member>
+        <member name="T:JYORMApi.Entity.SysUser">
+            <summary>
+            用户信息
             </summary>
         </member>
         <member name="P:JYORMApi.Entity.SysUser.UserName">

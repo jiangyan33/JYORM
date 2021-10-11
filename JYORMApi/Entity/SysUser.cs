@@ -3,6 +3,9 @@ using System;
 
 namespace JYORMApi.Entity
 {
+    /// <summary>
+    /// 用户信息
+    /// </summary>
     [SugarTable(nameof(SysUser))]
     public class SysUser : BaseEntity
     {
@@ -28,7 +31,7 @@ namespace JYORMApi.Entity
         public string NickName { get; set; }
 
         [SugarColumn]
-        public DateTime Birthday { get; set; }
+        public DateTime? Birthday { get; set; }
 
         [SugarColumn]
         public string Sex { get; set; }
@@ -37,7 +40,7 @@ namespace JYORMApi.Entity
         public string Description { get; set; }
 
         [SugarColumn]
-        public DateTime LastLoginTime { get; set; }
+        public DateTime? LastLoginTime { get; set; }
 
         [SugarColumn]
         public DateTime UpdateTokenTime { get; set; }

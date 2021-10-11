@@ -20,43 +20,43 @@ namespace JYORMApi.Entity
         /// <summary>
         /// 表注释
         /// </summary>
-        [SugarColumn] 
+        [SugarColumn]
         public string TableComment { get; set; }
 
         /// <summary>
         /// 列名称
         /// </summary>
-        [SugarColumn] 
+        [SugarColumn]
         public string ColumnName { get; set; }
 
         /// <summary>
         /// 顺序
         /// </summary>
-        [SugarColumn] 
+        [SugarColumn]
         public int OrdinalPosition { get; set; }
 
         /// <summary>
         /// 列默认值
         /// </summary>
-        [SugarColumn] 
+        [SugarColumn]
         public string ColumnDefault { get; set; }
 
         /// <summary>
         /// 是否为空 NO
         /// </summary>
-        [SugarColumn] 
+        [SugarColumn]
         public string IsNullable { get; set; }
 
         /// <summary>
         /// 列类型
         /// </summary>
-        [SugarColumn] 
+        [SugarColumn]
         public string DataType { get; set; }
 
         /// <summary>
         /// 列注释
         /// </summary>
-        [SugarColumn] 
+        [SugarColumn]
         public string ColumnComment { get; set; }
     }
 }
