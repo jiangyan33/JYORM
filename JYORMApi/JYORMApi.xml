@@ -4,17 +4,6 @@
         <name>JYORMApi</name>
     </assembly>
     <members>
-        <member name="T:JYORMApi.Attr.TransactionsAttribute">
-            <summary>
-            声明式事务特性，仅仅作为事务声明
-            </summary>
-        </member>
-        <member name="M:JYORMApi.Attr.TransactionsAttribute.#ctor(System.Boolean)">
-            <summary>
-            声明式事务特性的构造方法
-            </summary>
-            <param name="transactions">为true时启用事务</param>
-        </member>
         <member name="M:JYORMApi.Controllers.CommonController.GetTableCreateDesc">
             <summary>
             创建数据库表描述信息
@@ -131,12 +120,62 @@
         </member>
         <member name="P:JYORMApi.Entity.SysUser.UserName">
             <summary>
-            用户名
+            登录名
             </summary>
         </member>
         <member name="P:JYORMApi.Entity.SysUser.Password">
             <summary>
-            密码
+            密码:加密后的数据
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Entity.SysUser.Telephone">
+            <summary>
+            手机号
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Entity.SysUser.Email">
+            <summary>
+            邮箱
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Entity.SysUser.NickName">
+            <summary>
+            昵称
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Entity.SysUser.Birthday">
+            <summary>
+            生日
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Entity.SysUser.Sex">
+            <summary>
+            性别:男,女,未知
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Entity.SysUser.Description">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Entity.SysUser.LastLoginTime">
+            <summary>
+            最后登录时间
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Entity.SysUser.UpdateTokenTime">
+            <summary>
+            刷新token时间，如果该值为null，表示需要重新登录
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Entity.SysUser.UserStatus">
+            <summary>
+            状态:NORMAL 正常 STOP停用
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Entity.SysUser.UserType">
+            <summary>
+            用户类型:ADMIN_USER后台用户，BOOK_USER图书端用户
             </summary>
         </member>
         <member name="T:JYORMApi.Middleware.CorsMiddleware">
@@ -541,12 +580,7 @@
             初始化认证信息
             </summary>
             <param name="services"></param>
-            <param name="key"></param>
-        </member>
-        <member name="T:JYORMApi.Utils.ServiceProxy">
-            <summary>
-            Service层代理对象
-            </summary>
+            <param name="configuration"></param>
         </member>
     </members>
 </doc>

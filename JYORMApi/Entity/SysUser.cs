@@ -69,7 +69,7 @@ namespace JYORMApi.Entity
         /// 刷新token时间，如果该值为null，表示需要重新登录
         /// </summary>
         [SugarColumn]
-        public DateTime? UpdateTokenTime { get; set; }
+        public DateTime UpdateTokenTime { get; set; }
 
         /// <summary>
         /// 状态:NORMAL 正常 STOP停用

@@ -3,7 +3,7 @@ using JYORMApi.Persistence;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace JYORMApi.Dao
+namespace JYORMApi.Mapper
 {
     public class CommonMapper
     {

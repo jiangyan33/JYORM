@@ -1,4 +1,4 @@
-﻿using JYORMApi.Dao;
+﻿using JYORMApi.Mapper;
 using JYORMApi.Entity;
 using JYORMApi.Model;
 using JYORMApi.Persistence;

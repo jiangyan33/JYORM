@@ -1,13 +1,10 @@
-﻿using JYORMApi.Dao;
-using JYORMApi.Entity;
-using JYORMApi.Model;
+﻿using JYORMApi.Entity;
 using JYORMApi.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -38,7 +35,7 @@ namespace JYORMApi.Utils
             foreach (var item in assTypes)
             {
                 //持久化层
-                if (item.Namespace == "JYORMApi.Dao" || item.Namespace == "JYORMApi.Service.Imp")
+                if (item.Namespace == "JYORMApi.Mapper" || item.Namespace == "JYORMApi.Service.Imp")
                 {
                     services.AddTransient(item);
                 }
@@ -47,12 +44,9 @@ namespace JYORMApi.Utils
                 {
                     services.AddTransient(item, ServiceProvider =>
                     {
+                        // 查找item接口的实现
                         var impType = assTypes.ToList().Find(x => x.GetInterface(item.FullName) != null);
-                        var serviceImp = ServiceProvider.GetService(impType);
-                        var service = typeof(DispatchProxy).GetMethod("Create").MakeGenericMethod(new Type[] { item, typeof(ServiceProxy) }).Invoke(null, null);
-                        (service as ServiceProxy).TargetInstance = serviceImp;
-
-                        return service;
+                        return ServiceProvider.GetService(impType);
                     });
                 }
             }
@@ -62,7 +56,7 @@ namespace JYORMApi.Utils
         /// 初始化认证信息
         /// </summary>
         /// <param name="services"></param>
-        /// <param name="key"></param>
+        /// <param name="configuration"></param>
         public static void InitAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
             string key = configuration["AppSettings:Key"];
@@ -89,7 +83,7 @@ namespace JYORMApi.Utils
                         context.Response.Clear();
                         context.Response.ContentType = "application/json";
                         context.Response.StatusCode = 401;
-                      //  await context.Response.WriteAsync(JsonConvert.SerializeObject(new Result(ResultCode.AuthError, "Authorization验证失败.")));
+                        //  await context.Response.WriteAsync(JsonConvert.SerializeObject(new Result(ResultCode.AuthError, "Authorization验证失败.")));
                     },
                     OnTokenValidated = async context =>
                     {
