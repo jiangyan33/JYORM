@@ -1,24 +1,22 @@
 ﻿using JYORMApi.Dao;
-using System;
+using JYORMApi.Entity;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace JYORMApi.Service.Imp
 {
     public class CommonServiceImp : ICommonService
     {
-        private readonly CommonDao _commonDao;
+        private readonly CommonMapper _commonMapper;
 
-        //public CommonServiceImp(CommonDao commonDao)
-        //{
-        //    _commonDao = commonDao;
-        //}
-
-        public async Task<List<JYORMCommon.Entity.Columns>> GetTableCreateDesc()
+        public CommonServiceImp(CommonMapper commonMapper)
         {
-            return null;
-            //return await _commonDao.GetTableCreateDesc();
+            _commonMapper = commonMapper;
+        }
+
+        public async Task<List<Columns>> GetTableCreateDesc()
+        {
+            return await _commonMapper.GetTableCreateDesc();
         }
     }
 }

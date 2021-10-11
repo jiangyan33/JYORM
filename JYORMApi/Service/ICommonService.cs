@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using JYORMApi.Entity;
+
 
 namespace JYORMApi.Service
 {
     public interface ICommonService
     {
-        public Task<List<JYORMCommon.Entity.Columns>> GetTableCreateDesc();
+        public Task<List<Columns>> GetTableCreateDesc();
     }
 }

@@ -9,6 +9,11 @@ namespace JYORMApi.Persistence
     {
         private readonly SqlSugarClient _client;
 
+        /// <summary>
+        /// 数据库配置信息
+        /// </summary>
+        public DBOption DBOption { get; private set; }
+
         public DefaultDBClient(IConfiguration Configuration)
         {
             var serivce = new ConfigureExternalServices
@@ -21,10 +26,11 @@ namespace JYORMApi.Persistence
             // 实例化数据库操作对象
             var dbOptionList = new List<DBOption>();
             Configuration.GetSection("ConnectionOptions").Bind(dbOptionList);
+            DBOption = dbOptionList[0];
             var connectionConfig = new ConnectionConfig
             {
                 DbType = DbType.MySql,
-                ConnectionString = dbOptionList[0].ToString(),
+                ConnectionString = DBOption.ToString(),
                 IsAutoCloseConnection = true,
                 ConfigureExternalServices = serivce
             };

@@ -66,6 +66,51 @@
             更新时间
             </summary>
         </member>
+        <member name="T:JYORMApi.Entity.Columns">
+            <summary>
+            数据库表列信息
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Entity.Columns.TableName">
+            <summary>
+            表名
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Entity.Columns.TableComment">
+            <summary>
+            表注释
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Entity.Columns.ColumnName">
+            <summary>
+            列名称
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Entity.Columns.OrdinalPosition">
+            <summary>
+            顺序
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Entity.Columns.ColumnDefault">
+            <summary>
+            列默认值
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Entity.Columns.IsNullable">
+            <summary>
+            是否为空 NO
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Entity.Columns.DataType">
+            <summary>
+            列类型
+            </summary>
+        </member>
+        <member name="P:JYORMApi.Entity.Columns.ColumnComment">
+            <summary>
+            列注释
+            </summary>
+        </member>
         <member name="P:JYORMApi.Entity.SysUser.UserName">
             <summary>
             用户名
@@ -243,6 +288,11 @@
             </summary>
             <param name="src"></param>
             <returns></returns>
+        </member>
+        <member name="P:JYORMApi.Persistence.DefaultDBClient.DBOption">
+            <summary>
+            数据库配置信息
+            </summary>
         </member>
         <member name="P:JYORMApi.Persistence.DefaultDBClient.GetInstance">
             <summary>
