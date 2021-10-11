@@ -1,21 +1,21 @@
 ﻿using SqlSugar;
 using System;
 
-namespace {{{{NameStr}}}}
+namespace {{NameStr}}
 {
 	
-  /// <summary>
-    /// {{{{TableComment}}}}
+    /// <summary>
+    /// {{TableComment}}
     /// </summary>
-    [SugarTable(nameof({{{{TableName}}}}))]
-    public class {{{{TableName}}}} : BaseEntity
+    [SugarTable(nameof({{TableName}}))]
+    public class {{TableName}} : BaseEntity
     {
-       {{{{#each Columns}}}}
+       {{#each Columns}}
         /// <summary>
-        /// {{{{this.ColumnComment}}}}
+        /// {{this.ColumnComment}}
         /// </summary>
         [SugarColumn]
-        public {{{{this.DataType}}}} {{{{this.ColumnName}}}} { get; set; }
-        {{{{/each}}}}
+        public {{this.DataType}} {{this.ColumnName}} { get; set; }
+        {{/each}}
     }
 }

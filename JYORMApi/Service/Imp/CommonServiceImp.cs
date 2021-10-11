@@ -51,6 +51,7 @@ namespace JYORMApi.Service.Imp
 
         public async Task<bool> CreateModel(string nameStr)
         {
+            var filterField = typeof(BaseEntity).GetProperties().Select(x => x.Name).ToList();
             var result = await _commonMapper.GetTableCreateDesc();
             var modelList = new List<KeyValuePair<string, string>>();
             var basePath = Path.GetDirectoryName(typeof(Program).Assembly.Location);
@@ -69,12 +70,17 @@ namespace JYORMApi.Service.Imp
                         x.DataType = x.DataType.TypeChange(x.IsNullable == "YES");
                         x.ColumnName = x.ColumnName.StrChange();
                         return x;
-                    }).ToList()
+                    }).Where(x => !filterField.Contains(x.ColumnName)).ToList()
                 };
                 var template = new StringTemplate(sourceTemplate);
                 var compileResult = template.Compile(sourceItem);
 
                 modelList.Add(new KeyValuePair<string, string>(sourceItem.TableName, compileResult));
+            }
+            // 写入文件到本地
+            foreach (var item in modelList)
+            {
+                File.WriteAllText(Path.Combine(basePath, $"{item.Key}.cs"), item.Value);
             }
             return true;
         }
