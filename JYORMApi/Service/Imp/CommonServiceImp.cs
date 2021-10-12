@@ -51,12 +51,34 @@ namespace JYORMApi.Service.Imp
 
         public async Task<bool> CreateModel(string nameStr)
         {
+            // 模板字符串
+            var sourceTemplate = @$"
+using SqlSugar;
+using System;
+
+namespace {{{{NameStr}}}}
+{{
+
+    /// <summary>
+    /// {{{{TableComment}}}}
+    /// </summary>
+    [SugarTable(nameof({{{{TableName}}}}))]
+    public class {{{{TableName}}}} : BaseEntity
+    {{
+       {{{{#each Columns}}}}
+        /// <summary>
+        /// {{{{this.ColumnComment}}}}
+        /// </summary>
+        [SugarColumn]
+        public {{{{this.DataType}}}} {{{{this.ColumnName}}}} {{ get; set; }}
+        {{{{/each}}}}
+    }}
+}}";
+
             var filterField = typeof(BaseEntity).GetProperties().Select(x => x.Name).ToList();
             var result = await _commonMapper.GetTableCreateDesc();
             var modelList = new List<KeyValuePair<string, string>>();
-            var basePath = Path.GetDirectoryName(typeof(Program).Assembly.Location);
-            var path = Path.Combine(basePath, "ModelTemplate.txt");
-            var sourceTemplate = File.ReadAllText(path);
+
             foreach (var item in result.GroupBy(x => x.TableName))
             {
                 var firstItem = item.First();
@@ -78,6 +100,7 @@ namespace JYORMApi.Service.Imp
                 modelList.Add(new KeyValuePair<string, string>(sourceItem.TableName, compileResult));
             }
             // 写入文件到本地
+            var basePath = Path.GetDirectoryName(typeof(Program).Assembly.Location);
             foreach (var item in modelList)
             {
                 File.WriteAllText(Path.Combine(basePath, $"{item.Key}.cs"), item.Value);
