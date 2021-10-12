@@ -9,8 +9,6 @@ using JYORMApi.Middleware;
 using JYORMApi.Utils;
 using JYORMApi.Converters;
 using JYORMApi.Filters;
-using Microsoft.OpenApi.Models;
-using System.IO;
 
 namespace JYORMApi
 {
@@ -35,16 +33,8 @@ namespace JYORMApi
                   opt.SerializerSettings.ContractResolver = new OrderedContractResolver();
               });
             services.InitService();
-            //services.InitAuthentication(Configuration);
-            services.AddSwaggerGen(option =>
-            {
-                option.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
-                var assembly = typeof(Program).Assembly;
-                var basePath = Path.GetDirectoryName(assembly.Location);
-                var xmlPath = Path.Combine(basePath, $"{assembly.GetName().Name}.xml");
-                option.IncludeXmlComments(xmlPath);
-            });
-
+            services.InitAuthentication(Configuration);
+            services.InitSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

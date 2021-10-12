@@ -26,7 +26,7 @@ namespace JYORMApi.Model
                         Message = "请求参数错误"; break;
 
                     case ResultCode.AuthError:
-                        Message = "权限错误"; break;
+                        Message = "Authorization验证失败"; break;
                 }
             }
             else Message = message;

@@ -1,15 +1,19 @@
-﻿using JYORMApi.Entity;
+﻿using JYORMApi.Model;
 using JYORMApi.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
+using System.Security.Claims;
 
 namespace JYORMApi.Utils
 {
@@ -53,63 +57,96 @@ namespace JYORMApi.Utils
         }
 
         /// <summary>
-        /// 初始化认证信息
+        /// 初始化JWT认证信息
         /// </summary>
         /// <param name="services"></param>
         /// <param name="configuration"></param>
         public static void InitAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
             string key = configuration["AppSettings:Key"];
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    // 在认证成功之后是否将令牌token存储在Microsoft.AspNetCore.Authentication.AuthenticationProperties中
+                    options.SaveToken = true;
+                    // 设置用于验证标识令牌的参数（主要设置的是jwt中的payload中的信息是否进行验证）。现在只验证过期时间和密钥
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        // 是否验证声明周期
+                        ValidateLifetime = false,
+                        // 是否验证签发人
+                        ValidateIssuer = false,
+                        // 是否验证受众
+                        ValidateAudience = false,
+
+                        //是否验证失效时间
+                        RequireExpirationTime = true,
+
+                        // 是否验证jwt中的密钥信息
+                        ValidateIssuerSigningKey = true,
+                        // 服务器端保存的密钥
+                        IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(key))
+                    };
+                    // jwt验证过程中的事件
+                    options.Events = new JwtBearerEvents()
+                    {
+                        // 在将质询发送回调用方之前调用。(实际是认证失败后的返回值信息)
+                        OnChallenge = async context =>
+                        {
+                            context.HandleResponse();
+                            context.Response.Clear();
+                            context.Response.ContentType = "application/json";
+                            context.Response.StatusCode = 401;
+                            await context.Response.WriteAsync(JsonConvert.SerializeObject(new CommonException(ResultCode.AuthError)));
+                        },
+                        // 在安全令牌通过验证且ClaimsIdentity（payload中的内容）已生成
+                        OnTokenValidated = context =>
+                       {
+                           var payload = (context.SecurityToken as JwtSecurityToken).Payload;
+                           var sysUserId = Convert.ToInt64(payload[ClaimTypes.Sid]);
+                           context.HttpContext.Items.Add("Id", sysUserId);
+                           return System.Threading.Tasks.Task.CompletedTask;
+                       }
+                    };
+                });
+        }
+
+        /// <summary>
+        /// 初始化Swagger服务
+        /// </summary>
+        /// <param name="services"></param>
+        public static void InitSwaggerGen(this IServiceCollection services)
+        {
+            services.AddSwaggerGen(option =>
             {
-                options.SaveToken = true;//保存token,后台验证token是否生效(重要)
-                options.RequireHttpsMetadata = false;
-                options.TokenValidationParameters = new TokenValidationParameters
+                option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
-                    // 不校验过期事件
-                    ValidateLifetime = false,
-                    ValidateIssuer = false,
-                    // token中需要有过期时间信息
-                    RequireExpirationTime = true,//是否验证失效时间
-                    ValidateAudience = false,
-                    ValidateIssuerSigningKey = true,//是否验证SecurityKey
-                    IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(key))
-                };
-                options.Events = new JwtBearerEvents()
-                {
-                    OnChallenge = async context =>
-                    {
-                        context.HandleResponse();
-                        context.Response.Clear();
-                        context.Response.ContentType = "application/json";
-                        context.Response.StatusCode = 401;
-                        //  await context.Response.WriteAsync(JsonConvert.SerializeObject(new Result(ResultCode.AuthError, "Authorization验证失败.")));
-                    },
-                    OnTokenValidated = async context =>
-                    {
-                        var payload = (context.SecurityToken as JwtSecurityToken).Payload;
-                        var date = DateTimeHelper.GetDateTimeFromTimestamp((payload[JwtRegisteredClaimNames.Exp]).ParseToLong());
+                    Description = "Json Web Token 验证请求头使用Bearer模式. 请求头参数示例: \"Authorization: Bearer {token}\"",
+                    Name = "Authorization",//Jwt default param name
+                    In = ParameterLocation.Header,//Jwt store address
+                    Type = SecuritySchemeType.ApiKey//Security scheme type
+                });
 
-                        var authorId = Convert.ToInt64(payload[JwtRegisteredClaimNames.Jti]);
-                        context.HttpContext.Items.Add("Id", authorId);
-
-                        // 手动校验token的过期时间
-                        // 根据http请求实例化一个子容器
-                        using var scope = context.HttpContext.RequestServices.CreateScope();
-                        //var authorDao = scope.ServiceProvider.GetService<UserDao>();
-                        //var author = await authorDao.FindOne(new User { Id = authorId });
-                        var author = new SysUser();
-                        // token过期时间
-                        var expireTime = Convert.ToInt32(configuration["AppSettings:ExpireTime"]);
-
-                        //if (date.AddMinutes(-expireTime).ToString("yyyy-MM-dd HH:mm:ss") != author.UpdateTokenTime.ToString("yyyy-MM-dd HH:mm:ss"))
-                        //    throw new CoreAuthException("Authorization验证失败", (int)ResultCode.AuthError);
-
-                        //判断token是否过期
-                        //if (date < DateTime.Now && !context.HttpContext.Request.Path.Value.Contains("users/RefreshToken"))
-                        //    throw new CoreAuthException("认证信息过期，请重新获取", (int)ResultCode.AuthExpireError);
-                    }
-                };
+                // 加验证类型为Bearer
+                option.AddSecurityRequirement(new OpenApiSecurityRequirement {
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = "Bearer"
+                                }
+                            },
+                            Array.Empty<string>()
+                        }
+                    });
+                option.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+                var assembly = typeof(Program).Assembly;
+                var basePath = Path.GetDirectoryName(assembly.Location);
+                var xmlPath = Path.Combine(basePath, $"{assembly.GetName().Name}.xml");
+                option.IncludeXmlComments(xmlPath);
             });
         }
     }

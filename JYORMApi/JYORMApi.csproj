@@ -21,11 +21,6 @@
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.10.0" />
     <PackageReference Include="SqlSugarCore" Version="5.0.4" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.2" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\JYORMCommon\JYORMCommon.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,9 +31,6 @@
 
   <ItemGroup>
     <None Update="JYORMApi.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="ModelTemplate.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

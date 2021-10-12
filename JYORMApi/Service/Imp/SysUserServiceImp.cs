@@ -37,7 +37,7 @@ namespace JYORMApi.Service.Imp
         public async Task<List<SysUser>> Get(SysUser sysUser)
         {
             return await _DB.GetInstance.Queryable<SysUser>().Where(CreateExpression(sysUser).ToExpression())
-                .OrderBy(x=>x.CreateTime,OrderByType.Asc).ToListAsync();
+                .OrderBy(x => x.CreateTime, OrderByType.Asc).ToListAsync();
         }
 
         public async Task<PageResult<SysUser>> GetPages(SysUser sysUser)
@@ -65,6 +65,11 @@ namespace JYORMApi.Service.Imp
             if (!string.IsNullOrEmpty(sysUser.Telephone))
             {
                 exp.And(x => x.Telephone == sysUser.Telephone);
+            }
+
+            if (!string.IsNullOrEmpty(sysUser.Password))
+            {
+                exp.And(x => x.Password == sysUser.Password);
             }
 
             if (!string.IsNullOrEmpty(sysUser.Search))
