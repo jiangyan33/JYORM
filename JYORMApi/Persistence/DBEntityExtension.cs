@@ -1,5 +1,4 @@
-﻿using JYORMApi.Model;
-using System.Text;
+﻿using System.Text;
 using System.Text.RegularExpressions;
 
 namespace JYORMApi.Persistence

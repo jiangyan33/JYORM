@@ -69,11 +69,11 @@ namespace JYORMApi.Utils
                 {
                     options.RequireHttpsMetadata = false;
                     // 在认证成功之后是否将令牌token存储在Microsoft.AspNetCore.Authentication.AuthenticationProperties中
-                    options.SaveToken = true;
+                    // options.SaveToken = true;
                     // 设置用于验证标识令牌的参数（主要设置的是jwt中的payload中的信息是否进行验证）。现在只验证过期时间和密钥
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        // 是否验证声明周期
+                        // 是否验证生命周期
                         ValidateLifetime = false,
                         // 是否验证签发人
                         ValidateIssuer = false,
@@ -98,13 +98,19 @@ namespace JYORMApi.Utils
                             context.Response.Clear();
                             context.Response.ContentType = "application/json";
                             context.Response.StatusCode = 401;
-                            await context.Response.WriteAsync(JsonConvert.SerializeObject(new CommonException(ResultCode.AuthError)));
+                            await context.Response.WriteAsync(JsonConvert.SerializeObject(new Result<string>(ResultCode.AuthError, "权限错误")));
                         },
                         // 在安全令牌通过验证且ClaimsIdentity（payload中的内容）已生成
                         OnTokenValidated = context =>
                        {
                            var payload = (context.SecurityToken as JwtSecurityToken).Payload;
                            var sysUserId = Convert.ToInt64(payload[ClaimTypes.Sid]);
+
+                           //var date1 = new DateTime(long.Parse("132784978809363371"));
+                           //Console.WriteLine(date1.ToString("yyyy-MM-dd HH:mm:ss"));
+
+                           //var date2 = new DateTime(long.Parse(payload["nbf"].ToString()));
+                           //Console.WriteLine(date2.ToString("yyyy-MM-dd HH:mm:ss"));
                            context.HttpContext.Items.Add("Id", sysUserId);
                            return System.Threading.Tasks.Task.CompletedTask;
                        }
