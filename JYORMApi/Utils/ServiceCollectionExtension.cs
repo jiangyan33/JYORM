@@ -80,7 +80,7 @@ namespace JYORMApi.Utils
                         // 是否验证受众
                         ValidateAudience = false,
 
-                        //是否验证失效时间
+                        //token是否需要有过期时间信息
                         RequireExpirationTime = true,
 
                         // 是否验证jwt中的密钥信息
@@ -105,12 +105,12 @@ namespace JYORMApi.Utils
                        {
                            var payload = (context.SecurityToken as JwtSecurityToken).Payload;
                            var sysUserId = Convert.ToInt64(payload[ClaimTypes.Sid]);
+                           var timeStamp = long.Parse(payload["exp"].ToString());
+                           long longTime = 621355968000000000;
+                           int samllTime = 10000000;
+                           DateTime dateTime = new DateTime(longTime + timeStamp * samllTime, DateTimeKind.Utc).ToLocalTime();
+                           if (DateTime.Now > dateTime) throw new CommonException(ResultCode.AuthError, "认证信息过期，请重新获取");
 
-                           //var date1 = new DateTime(long.Parse("132784978809363371"));
-                           //Console.WriteLine(date1.ToString("yyyy-MM-dd HH:mm:ss"));
-
-                           //var date2 = new DateTime(long.Parse(payload["nbf"].ToString()));
-                           //Console.WriteLine(date2.ToString("yyyy-MM-dd HH:mm:ss"));
                            context.HttpContext.Items.Add("Id", sysUserId);
                            return System.Threading.Tasks.Task.CompletedTask;
                        }
