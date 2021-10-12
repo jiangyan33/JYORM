@@ -3,6 +3,7 @@ using JYORMApi.Model;
 using JYORMApi.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MyCommonTool.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

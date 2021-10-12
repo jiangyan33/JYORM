@@ -5,8 +5,8 @@ using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using System.Text;
 using System.Threading.Tasks;
-using JYORMApi.Model;
 using System;
+using MyCommonTool.Models;
 
 namespace JYORMApi.Middleware
 {

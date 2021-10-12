@@ -222,69 +222,6 @@
             <param name="applicationBuilder"></param>
             <returns></returns>
         </member>
-        <member name="P:JYORMApi.Model.CommonException.Code">
-            <summary>
-            状态码
-            </summary>
-        </member>
-        <member name="P:JYORMApi.Model.CommonException.Message">
-            <summary>
-            错误信息提示
-            </summary>
-        </member>
-        <member name="P:JYORMApi.Model.QueryParam.Search">
-            <summary>
-            搜索
-            </summary>
-        </member>
-        <member name="P:JYORMApi.Model.QueryParam.OrderBy">
-            <summary>
-            排序字段
-            </summary>
-        </member>
-        <member name="P:JYORMApi.Model.QueryParam.OrderByType">
-            <summary>
-            排序方式是否为升序
-            </summary>
-        </member>
-        <member name="P:JYORMApi.Model.QueryParam.PageNum">
-            <summary>
-            当前页码
-            </summary>
-        </member>
-        <member name="P:JYORMApi.Model.QueryParam.PageSize">
-            <summary>
-            每页显示数量
-            </summary>
-        </member>
-        <member name="P:JYORMApi.Model.Result`1.Code">
-            <summary>
-            状态码
-            </summary>
-        </member>
-        <member name="P:JYORMApi.Model.Result`1.Message">
-            <summary>
-            错误信息提示
-            </summary>
-        </member>
-        <member name="P:JYORMApi.Model.Result`1.Data">
-            <summary>
-            数据
-            </summary>
-        </member>
-        <member name="M:JYORMApi.Model.Result`1.#ctor(JYORMApi.Model.ResultCode,System.String)">
-            <summary>
-            根据状态码返回数据
-            </summary>
-            <param name="code"></param>
-            <param name="message"></param>
-        </member>
-        <member name="M:JYORMApi.Model.Result`1.#ctor(`0)">
-            <summary>
-            请求成功，且有数据返回
-            </summary>
-            <param name="data"></param>
-        </member>
         <member name="T:JYORMApi.Model.PageResult`1">
             <summary>
             封装分页相关数据
@@ -329,42 +266,30 @@
             总数据行数
             </summary>
         </member>
-        <member name="T:JYORMApi.Model.ResultCode">
+        <member name="P:JYORMApi.Model.QueryParam.Search">
             <summary>
-            状态码
+            搜索
             </summary>
         </member>
-        <member name="F:JYORMApi.Model.ResultCode.Success">
+        <member name="P:JYORMApi.Model.QueryParam.OrderBy">
             <summary>
-            成功
+            排序字段
             </summary>
         </member>
-        <member name="F:JYORMApi.Model.ResultCode.CommonError">
+        <member name="P:JYORMApi.Model.QueryParam.OrderByType">
             <summary>
-            自定义错误
+            排序方式是否为升序
             </summary>
         </member>
-        <member name="F:JYORMApi.Model.ResultCode.ArgumentError">
+        <member name="P:JYORMApi.Model.QueryParam.PageNum">
             <summary>
-            请求参数错误
+            当前页码
             </summary>
         </member>
-        <member name="F:JYORMApi.Model.ResultCode.LogicError">
+        <member name="P:JYORMApi.Model.QueryParam.PageSize">
             <summary>
-            内部接口逻辑错误
+            每页显示数量
             </summary>
-        </member>
-        <member name="F:JYORMApi.Model.ResultCode.AuthError">
-            <summary>
-            权限错误
-            </summary>
-        </member>
-        <member name="M:JYORMApi.Persistence.DBEntityExtension.StrChange(System.String)">
-            <summary>
-            字符串大驼峰和下划线相互转换
-            </summary>
-            <param name="src"></param>
-            <returns></returns>
         </member>
         <member name="P:JYORMApi.Persistence.DefaultDBClient.DBOption">
             <summary>

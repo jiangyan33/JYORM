@@ -51,30 +51,6 @@ namespace JYORMApi.Service.Imp
 
         public async Task<bool> CreateModel(string nameStr)
         {
-            // 模板字符串
-            var sourceTemplate = @$"
-using SqlSugar;
-using System;
-
-namespace {{{{NameStr}}}}
-{{
-
-    /// <summary>
-    /// {{{{TableComment}}}}
-    /// </summary>
-    [SugarTable(nameof({{{{TableName}}}}))]
-    public class {{{{TableName}}}} : BaseEntity
-    {{
-       {{{{#each Columns}}}}
-        /// <summary>
-        /// {{{{this.ColumnComment}}}}
-        /// </summary>
-        [SugarColumn]
-        public {{{{this.DataType}}}} {{{{this.ColumnName}}}} {{ get; set; }}
-        {{{{/each}}}}
-    }}
-}}";
-
             var filterField = typeof(BaseEntity).GetProperties().Select(x => x.Name).ToList();
             var result = await _commonMapper.GetTableCreateDesc();
             var modelList = new List<KeyValuePair<string, string>>();
@@ -89,12 +65,12 @@ namespace {{{{NameStr}}}}
                     TableName = firstItem.TableName.StrChange(),
                     Columns = item.Select(x =>
                     {
-                        x.DataType = x.DataType.TypeChange(x.IsNullable == "YES");
+                        x.DataType = x.DataType.MySqlTypeChange(x.IsNullable == "YES");
                         x.ColumnName = x.ColumnName.StrChange();
                         return x;
                     }).Where(x => !filterField.Contains(x.ColumnName)).ToList()
                 };
-                var template = new StringTemplate(sourceTemplate);
+                var template = new StringTemplate(StringTemplate.GetModelTemplate());
                 var compileResult = template.Compile(sourceItem);
 
                 modelList.Add(new KeyValuePair<string, string>(sourceItem.TableName, compileResult));
