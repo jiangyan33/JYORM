@@ -36,6 +36,13 @@
             <param name="sysUser"></param>
             <returns></returns>
         </member>
+        <member name="M:JYORMApi.Controllers.SysUsersController.Add(JYORMApi.Entity.SysUser)">
+            <summary>
+            新增
+            </summary>
+            <param name="sysUser"></param>
+            <returns></returns>
+        </member>
         <member name="M:JYORMApi.Controllers.SysUsersController.Get(JYORMApi.Entity.SysUser)">
             <summary>
             登录

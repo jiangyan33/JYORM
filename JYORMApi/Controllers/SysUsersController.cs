@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using MyCommonTool.Models;
+using MyCommonTool.Utils;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -60,6 +61,27 @@ namespace JYORMApi.Controllers
         }
 
         /// <summary>
+        /// 新增
+        /// </summary>
+        /// <param name="sysUser"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Authorize]
+        public async Task<Result<int>> Add([FromBody] SysUser sysUser)
+        {
+            if (string.IsNullOrEmpty(sysUser.UserName) || string.IsNullOrEmpty(sysUser.Password)) throw new CommonException(ResultCode.ArgumentError);
+            var id = Convert.ToInt64(HttpContext.Items["Id"]);
+            sysUser.UpdateBy = id;
+            sysUser.CreateBy = id;
+            string key = _configuration["AppSettings:Key"];
+            sysUser.Password = CommonUtils.Encrypt(key, sysUser.Password);
+
+            var result = await _sysUserService.Add(sysUser);
+
+            return new Result<int>(result);
+        }
+
+        /// <summary>
         /// 登录
         /// </summary>
         /// <param name="sysUser"></param>
@@ -69,25 +91,23 @@ namespace JYORMApi.Controllers
         {
             if (string.IsNullOrEmpty(sysUser.UserName) || string.IsNullOrEmpty(sysUser.Password)) throw new CommonException(ResultCode.ArgumentError);
 
+            // 对密码进行加密
+            var key = _configuration.GetSection("AppSettings")["Key"];
+            var expireTime = int.Parse(_configuration["AppSettings:ExpireTime"]);
+
+            sysUser.Password = CommonUtils.Encrypt(key, sysUser.Password);
             var result = await _sysUserService.Get(sysUser);
             if (result.Count == 0) return new Result<string>(null);
-            string key = _configuration["AppSettings:Key"];
 
             // 生成JWT验证Token
             //创建授权声明(Payload中的内容)
             var authClaims = new List<Claim> {
                 new Claim(ClaimTypes.Sid,result[0].Id.ToString())
             };
-            var date1 = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified);
-            var date2 = DateTime.Now.AddMinutes(3);
-            Console.WriteLine(date1.ToString("yyyy-MM-dd HH:mm:ss"));
-            Console.WriteLine(date2.ToString("yyyy-MM-dd HH:mm:ss"));
             // 生成token
             var jwtSecurityToken = new JwtSecurityToken(
-                    // 处理时差问题
-                    //notBefore: DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified),
                     claims: authClaims,
-                    expires: DateTime.Now.AddMinutes(1),
+                    expires: DateTime.Now.AddMinutes(expireTime),
                     signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)), SecurityAlgorithms.HmacSha256)
                     );
             var token = "Bearer " + new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);

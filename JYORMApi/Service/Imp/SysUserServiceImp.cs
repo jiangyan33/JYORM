@@ -84,5 +84,10 @@ namespace JYORMApi.Service.Imp
         {
             return await _sysUserMapper.GetByName();
         }
+
+        public async Task<int> Add(SysUser sysUser)
+        {
+            return await _DB.GetInstance.Insertable(sysUser).IgnoreColumns(ignoreNullColumn: true).ExecuteReturnIdentityAsync();
+        }
     }
 }

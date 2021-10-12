@@ -1,5 +1,4 @@
 ﻿using JYORMApi.Entity;
-using JYORMApi.Model;
 using JYORMApi.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

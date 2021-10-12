@@ -16,5 +16,7 @@ namespace JYORMApi.Service
         public Task<List<SysUser>> Get(SysUser sysUser);
 
         public Task<PageResult<SysUser>> GetPages(SysUser sysUser);
+
+        public Task<int> Add(SysUser sysUser);
     }
 }

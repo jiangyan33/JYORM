@@ -1,5 +1,4 @@
-﻿using JYORMApi.Model;
-using JYORMApi.Persistence;
+﻿using JYORMApi.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -15,6 +14,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Security.Claims;
+using MyCommonTool.Utils;
 
 namespace JYORMApi.Utils
 {
@@ -37,15 +37,18 @@ namespace JYORMApi.Utils
             // loadFrom:已知程序集的文件名或路径，加载程序集。loadFile是加载程序集中的内容，在这里无法使用
             var assTypes = Assembly.GetExecutingAssembly().GetTypes();
 
+            // 程序集的名称
+            var assemblyName = typeof(Program).Assembly.GetName().Name;
+
             foreach (var item in assTypes)
             {
                 //持久化层
-                if (item.Namespace == "JYORMApi.Mapper" || item.Namespace == "JYORMApi.Service.Imp")
+                if (item.Namespace == $"{assemblyName}.Mapper" || item.Namespace == $"{assemblyName}.Service.Imp")
                 {
                     services.AddTransient(item);
                 }
                 // 加载业务层代理对象
-                if (item.Namespace == "JYORMApi.Service")
+                if (item.Namespace == $"{assemblyName}.Service")
                 {
                     services.AddTransient(item, ServiceProvider =>
                     {
@@ -106,10 +109,8 @@ namespace JYORMApi.Utils
                        {
                            var payload = (context.SecurityToken as JwtSecurityToken).Payload;
                            var sysUserId = Convert.ToInt64(payload[ClaimTypes.Sid]);
-                           var timeStamp = long.Parse(payload["exp"].ToString());
-                           long longTime = 621355968000000000;
-                           int samllTime = 10000000;
-                           DateTime dateTime = new DateTime(longTime + timeStamp * samllTime, DateTimeKind.Utc).ToLocalTime();
+                           var timeStamp = long.Parse(payload[JwtRegisteredClaimNames.Exp].ToString());
+                           var dateTime = timeStamp.ToDateTime();
                            if (DateTime.Now > dateTime) throw new CommonException(ResultCode.AuthError, "认证信息过期，请重新获取");
 
                            context.HttpContext.Items.Add("Id", sysUserId);
