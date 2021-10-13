@@ -36,16 +36,16 @@ namespace JYORMApi.Persistence
                 IsAutoCloseConnection = true,
                 ConfigureExternalServices = serivce
             };
-#if DEBUG
-            connectionConfig.AopEvents = new AopEvents
-            {
-                OnLogExecuting = (sql, p) =>
-                {
-                    System.Console.WriteLine(sql);
-                    System.Console.WriteLine(string.Join(",", p?.Select(it => it.ParameterName + ":" + it.Value)));
-                }
-            };
-#endif
+//#if DEBUG
+//            connectionConfig.AopEvents = new AopEvents
+//            {
+//                OnLogExecuting = (sql, p) =>
+//                {
+//                    System.Console.WriteLine(sql);
+//                    System.Console.WriteLine(string.Join(",", p?.Select(it => it.ParameterName + ":" + it.Value)));
+//                }
+//            };
+//#endif
             _client = new SqlSugarClient(connectionConfig);
         }
 
