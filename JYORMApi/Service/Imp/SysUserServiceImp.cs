@@ -19,15 +19,6 @@ namespace JYORMApi.Service.Imp
             _sysUserMapper = sysUserMapper;
         }
 
-        public async Task<int> AddOne(SysUser sysUser)
-        {
-            sysUser.UserName = "江岩";
-            sysUser.Password = "123456";
-            sysUser.CreateBy = 1;
-            sysUser.UpdateBy = 1;
-            return await _DB.GetInstance.Insertable(sysUser).IgnoreColumns(ignoreNullColumn: true).ExecuteCommandAsync();
-        }
-
         #region 通用的操作
         public async Task<SysUser> Get(long id)
         {

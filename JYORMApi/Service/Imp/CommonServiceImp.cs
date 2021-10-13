@@ -30,17 +30,21 @@ namespace JYORMApi.Service.Imp
         {
             var result = await _client.UseTranAsync(async () =>
              {
-                 var sysUser = new SysUser();
-                 sysUser.UserName = "江岩1";
-                 sysUser.Password = "123456";
-                 sysUser.CreateBy = 1;
-                 sysUser.UpdateBy = 1;
+                 var sysUser = new SysUser
+                 {
+                     UserName = "江岩1",
+                     Password = "123456",
+                     CreateBy = 1,
+                     UpdateBy = 1
+                 };
                  await _client.Insertable(sysUser).IgnoreColumns(ignoreNullColumn: true).ExecuteCommandAsync();
-                 var sysUser1 = new SysUser();
-                 sysUser1.UserName = "江岩1";
-                 sysUser1.Password = "123456";
-                 sysUser1.CreateBy = 1;
-                 sysUser1.UpdateBy = 1;
+                 var sysUser1 = new SysUser
+                 {
+                     UserName = "江岩1",
+                     Password = "123456",
+                     CreateBy = 1,
+                     UpdateBy = 1
+                 };
                  await _client.Insertable(sysUser1).IgnoreColumns(ignoreNullColumn: true).ExecuteCommandAsync();
              });
             if (!result.IsSuccess)
